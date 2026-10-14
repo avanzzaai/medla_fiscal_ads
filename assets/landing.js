@@ -1,7 +1,8 @@
 /* MEDLA · Landing Asesoría Fiscal · v2
-   Comportamiento (plazo fiscal en vivo, pestañas, calendario, formulario, reseñas,
-   barra móvil, medición) + motion GSAP. Todo el contenido funciona sin JS; con
-   prefers-reduced-motion o sin GSAP la página queda en su estado final. */
+   Comportamiento propio de la landing (barra móvil, reseñas) + motion GSAP.
+   La medición, el plazo fiscal, el calendario y los enlaces del embudo viven en core.js,
+   que comparte con /reservar/, /whatsapp/ y /gracias/. Todo el contenido funciona sin JS;
+   con prefers-reduced-motion o sin GSAP la página queda en su estado final. */
 (() => {
   "use strict";
 
@@ -11,255 +12,23 @@
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------------------------------------------------------------- medición */
-  const track = (event, data = {}) => {
-    const payload = { event, page: "lp-asesoria-fiscal", ...data };
-    try { (window.dataLayer = window.dataLayer || []).push(payload); } catch (e) { /* sin dataLayer */ }
-    try {
-      if (typeof window.fbq === "function") {
-        if (event === "lead_submit") window.fbq("track", "Lead", { content_name: "Asesoría Fiscal" });
-        else if (event === "cta_click") window.fbq("trackCustom", "CTAClick", data);
-      }
-    } catch (e) { /* sin píxel */ }
-  };
-  document.addEventListener("click", (e) => {
-    const el = e.target.closest("[data-track]");
-    if (el) track(el.dataset.track, el.dataset.cta ? { cta: el.dataset.cta } : {});
-  });
-
-  /* UTM y clics de anuncio: viajan con el formulario a HighLevel */
-  const ATTR_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "fbclid"];
-  const attribution = (() => {
-    let stored = {};
-    try { stored = JSON.parse(sessionStorage.getItem("medla_lp_attr") || "{}"); } catch (e) { stored = {}; }
-    const params = new URLSearchParams(location.search);
-    const fresh = {};
-    ATTR_KEYS.forEach((k) => { if (params.get(k)) fresh[k] = params.get(k).slice(0, 200); });
-    const merged = Object.keys(fresh).length ? fresh : stored;
-    try { sessionStorage.setItem("medla_lp_attr", JSON.stringify(merged)); } catch (e) { /* almacenamiento bloqueado */ }
-    return merged;
-  })();
-
-  /* ---------------------------------------------------------------- próximo plazo fiscal
-     Calendario de la Agencia Tributaria: IVA (303) e IRPF (130) del 1 al 20 de abril, julio
-     y octubre, y hasta el 30 de enero; 720/721 hasta el 31 de marzo; Renta hasta el 30 de
-     junio. Si el último día cae en fin de semana, pasa al lunes. */
-  const MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
-  const MONTHS_SHORT = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sept", "oct", "nov", "dic"];
-  const DEADLINES = [
-    [0, 30, "IVA e IRPF del cuarto trimestre"],
-    [2, 31, "bienes y criptomonedas en el extranjero (720 y 721)"],
-    [3, 20, "IVA e IRPF del primer trimestre"],
-    [5, 30, "fin de la campaña de la Renta"],
-    [6, 20, "IVA e IRPF del segundo trimestre"],
-    [9, 20, "IVA e IRPF del tercer trimestre"],
-  ];
-  const nextDeadline = (now = new Date()) => {
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    for (const year of [today.getFullYear(), today.getFullYear() + 1]) {
-      for (const [m, d, label] of DEADLINES) {
-        const date = new Date(year, m, d);
-        const wd = date.getDay();
-        if (wd === 6) date.setDate(date.getDate() + 2);
-        else if (wd === 0) date.setDate(date.getDate() + 1);
-        if (date >= today) return { date, label, days: Math.round((date - today) / 86400000) };
-      }
-    }
-    return null;
-  };
-  const dl = nextDeadline();
-  if (dl) {
-    const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
-    const days = dl.days === 0 ? "Último día: hoy" : dl.days === 1 ? "Falta 1 día" : `Faltan ${dl.days} días`;
-    const values = {
-      short: `${dl.date.getDate()} ${MONTHS_SHORT[dl.date.getMonth()]}`,
-      long: `${dl.date.getDate()} de ${MONTHS[dl.date.getMonth()]}`,
-      label: dl.label,
-      days,
-    };
-    $$("[data-dl]").forEach((el) => {
-      const key = el.dataset.dl;
-      let text = values[key];
-      if (key === "label" && el.closest(".deadline")) text = cap(text);
-      if (key === "days" && !el.closest(".deadline")) text = `${days}.`;
-      el.textContent = text;
-      el.hidden = false;
-    });
-  }
-
-  /* ---------------------------------------------------------------- barra móvil */
+  /* ---------------------------------------------------------------- barra móvil
+     Visible mientras no haya otros botones de reserva en pantalla (hero, calendario, cierre). */
   const dock = $("[data-dock]");
-  const heroCtas = $(".hero__ctas");
-  const book = $("#reservar");
-  let heroCtaVisible = true;
-  let bookVisible = false;
+  const watched = [[$(".hero__ctas"), 0], [$("#reservar"), 0.04], [$(".final__ctas"), 0]].filter(([el]) => el);
+  const inView = new Set([watched.length ? watched[0][0] : null]);
   const syncDock = () => {
     if (!dock) return;
-    const on = !heroCtaVisible && !bookVisible;
+    const on = inView.size === 0;
     dock.classList.toggle("is-on", on);
     dock.setAttribute("aria-hidden", on ? "false" : "true");
     $$("a", dock).forEach((a) => (a.tabIndex = on ? 0 : -1));
   };
   if ("IntersectionObserver" in window) {
-    if (heroCtas) new IntersectionObserver(([e]) => { heroCtaVisible = e.isIntersecting; syncDock(); }).observe(heroCtas);
-    if (book) new IntersectionObserver(([e]) => { bookVisible = e.isIntersecting; syncDock(); }, { threshold: 0.04 }).observe(book);
-  }
-
-  /* ---------------------------------------------------------------- pestañas */
-  const tabs = $(".tabs");
-  const tabBtns = $$("[data-tab]");
-  let chosenTopic = "";
-  const topicSelect = $("#f-topic");
-  const applyTopic = () => {
-    if (!chosenTopic || !topicSelect || topicSelect.value) return;
-    const opt = Array.from(topicSelect.options).find((o) => o.text === chosenTopic);
-    if (opt) topicSelect.value = opt.value || opt.text;
-  };
-  const showTab = (name, focus = false) => {
-    if (!tabs) return;
-    tabs.dataset.active = name;
-    tabBtns.forEach((btn) => {
-      const on = btn.dataset.tab === name;
-      btn.setAttribute("aria-selected", on ? "true" : "false");
-      btn.tabIndex = on ? 0 : -1;
-      const panel = document.getElementById(btn.getAttribute("aria-controls"));
-      if (!panel) return;
-      if (on && panel.hidden) {
-        panel.hidden = false;
-        panel.classList.remove("is-entering");
-        void panel.offsetWidth;
-        panel.classList.add("is-entering");
-      } else if (!on) {
-        panel.hidden = true;
-      }
-      if (on && focus) btn.focus();
-    });
-    if (name === "llamada") applyTopic();
-    if (window.ScrollTrigger) window.ScrollTrigger.refresh();
-  };
-  tabBtns.forEach((btn, i) => {
-    btn.addEventListener("click", () => { showTab(btn.dataset.tab); track("tab_view", { tab: btn.dataset.tab }); });
-    btn.addEventListener("keydown", (e) => {
-      if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key)) return;
-      e.preventDefault();
-      let next = i;
-      if (e.key === "ArrowRight") next = (i + 1) % tabBtns.length;
-      if (e.key === "ArrowLeft") next = (i - 1 + tabBtns.length) % tabBtns.length;
-      if (e.key === "Home") next = 0;
-      if (e.key === "End") next = tabBtns.length - 1;
-      showTab(tabBtns[next].dataset.tab, true);
-    });
-  });
-  $$("[data-open-tab]").forEach((a) => a.addEventListener("click", () => showTab(a.dataset.openTab)));
-  $$('a[href="#reservar"]:not([data-open-tab])').forEach((a) => a.addEventListener("click", () => {
-    if (a.dataset.topic) chosenTopic = a.dataset.topic;
-    showTab("reserva");
-  }));
-  if (location.hash === "#llamada") showTab("llamada");
-
-  /* ---------------------------------------------------------------- calendario diferido */
-  const cal = $("[data-cal]");
-  if (cal) {
-    const frame = $("iframe", cal);
-    let loaded = false;
-    const load = () => {
-      if (loaded || !frame) return;
-      loaded = true;
-      frame.addEventListener("load", () => cal.classList.add("is-ready"), { once: true });
-      setTimeout(() => cal.classList.add("is-ready"), 8000);
-      frame.src = frame.dataset.src;
-      track("booking_view");
-    };
-    if ("IntersectionObserver" in window) {
-      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { load(); io.disconnect(); } }, { rootMargin: "1000px 0px" });
-      io.observe(cal);
-    } else {
-      load();
-    }
-    $$('a[href="#reservar"]').forEach((a) => a.addEventListener("click", load));
-  }
-
-  /* ---------------------------------------------------------------- formulario */
-  const form = $('[data-form="fiscal"]');
-  if (form) {
-    const status = $(".form__status", form);
-    const submit = $(".form__submit", form);
-    const submitLabel = $(".btn__t", submit).textContent;
-    const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-    const rules = {
-      name: (v) => (v.trim().length >= 2 ? "" : "Escribe tu nombre."),
-      phone: (v) => (v.replace(/\D/g, "").length >= 9 ? "" : "Escribe un teléfono válido, con prefijo si no es español."),
-      email: (v) => (EMAIL.test(v.trim()) ? "" : "Revisa el correo: falta algo."),
-      topic: (v) => (v ? "" : "Elige el tema de tu consulta."),
-    };
-    const errIds = { name: "f-name-err", phone: "f-phone-err", email: "f-email-err", topic: "f-topic-err" };
-    const setError = (name, msg) => {
-      const input = form.elements[name];
-      const field = input && input.closest(".field");
-      const err = document.getElementById(errIds[name]);
-      if (err) err.textContent = msg;
-      if (input) {
-        input.setAttribute("aria-invalid", msg ? "true" : "false");
-        if (msg) input.setAttribute("aria-describedby", errIds[name]);
-        else input.removeAttribute("aria-describedby");
-      }
-      if (field) {
-        field.classList.toggle("is-invalid", !!msg);
-        if (msg) { field.classList.remove("shake"); void field.offsetWidth; field.classList.add("shake"); }
-      }
-    };
-    Object.keys(rules).forEach((name) => {
-      const input = form.elements[name];
-      if (!input) return;
-      input.addEventListener("blur", () => { if (input.value) setError(name, rules[name](input.value)); });
-      input.addEventListener("input", () => { if (input.getAttribute("aria-invalid") === "true") setError(name, rules[name](input.value)); });
-      input.addEventListener("change", () => { if (input.getAttribute("aria-invalid") === "true") setError(name, rules[name](input.value)); });
-    });
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      status.textContent = "";
-      status.className = "form__status";
-      let firstBad = null;
-      Object.keys(rules).forEach((name) => {
-        const msg = rules[name](form.elements[name].value);
-        setError(name, msg);
-        if (msg && !firstBad) firstBad = form.elements[name];
-      });
-      const consent = form.elements.consent_processing;
-      const consentErr = document.getElementById("f-consent-err");
-      consentErr.textContent = consent.checked ? "" : "Necesitamos tu consentimiento para llamarte.";
-      if (!consent.checked && !firstBad) firstBad = consent;
-      if (firstBad) { firstBad.focus(); return; }
-
-      const data = Object.fromEntries(new FormData(form).entries());
-      data.consent_processing = true;
-      data.plan = "fiscal";
-      data.page = location.pathname;
-      Object.assign(data, attribution);
-
-      submit.disabled = true;
-      $(".btn__t", submit).textContent = "Enviando…";
-      try {
-        const res = await fetch("/api/form/fiscal", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-        const out = await res.json().catch(() => ({}));
-        if (!res.ok || !out.ok) throw new Error(out.error || "Error");
-        form.reset();
-        status.className = "form__status is-ok";
-        status.textContent = "Recibido. Un asesor fiscal te llamará en horario de oficina para ver tu caso.";
-        track("lead_submit", { form: "fiscal", topic: data.topic });
-      } catch (err) {
-        status.className = "form__status is-error";
-        status.textContent = "No pudimos enviar el formulario. Llámanos al +34 914 32 14 57 o inténtalo de nuevo en un momento.";
-      } finally {
-        submit.disabled = false;
-        $(".btn__t", submit).textContent = submitLabel;
-      }
-    });
+    watched.forEach(([el, threshold]) => new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) inView.add(el); else inView.delete(el);
+      syncDock();
+    }, { threshold }).observe(el));
   }
 
   /* ---------------------------------------------------------------- reseñas: botones y arrastre */

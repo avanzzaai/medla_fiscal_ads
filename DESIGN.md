@@ -48,13 +48,17 @@ Google Trends, España, últimos 12 meses (hasta sept. 2026). Escala común (imp
 |---|---|---|---|
 | `--ink` / `--navy` | `#142D37` | `#EFEBE2` / `#17323D` | Texto y paneles navy |
 | `--navy-deep` | `#0B1D24` | `#0E2129` | Hero, cierre, tarjeta de extranjeros |
-| `--ivory` | `#F4F1EA` | `#0B171C` | Lienzo |
+| `--ivory` | `#F9F8F6` | `#0B171C` | Lienzo: el claro de MEDLA |
 | `--paper` | `#FFFFFF` | `#12242B` | Tarjetas |
 | `--gold` | `#C9A84C` | `#D2B25A` | Acento único: acción, dato, palabra clave |
 | `--gold-ink` | `#7D6219` | `#D2B25A` | Dorado para texto pequeño sobre claro (5,1:1) |
 | `--muted` | `#586A70` | `#A8B5B9` | Texto secundario (5,0:1 sobre marfil) |
 
 Arena (`--sand`) = mezcla de dorado y marfil, solo para la tarjeta de herencias.
+
+**Tema:** siempre claro, con el fondo `#F9F8F6` de MEDLA, aunque el sistema esté en modo oscuro
+(`<meta name="color-scheme" content="light">`, sin `prefers-color-scheme`). La columna "Oscuro" solo
+se aplica si se pone `data-theme="dark"` en `<html>`.
 
 **Tipo:** DM Serif Display (la display del sitio de MEDLA; itálica en dorado para la palabra clave) +
 DM Sans 400–700. H1 `clamp(3.4rem, 8.4vw, 8rem)`, H2 `clamp(2.4rem, 5vw, 4.4rem)`, tracking −0,02 em.
@@ -72,9 +76,24 @@ píldora. Botón con ícono en su propio círculo. Sombras teñidas de navy, nun
 5. **Oferta** · ticket de 121 € fijo mientras la línea de 3 pasos se dibuja con el scroll.
 6. **Por qué MEDLA** · panel oscuro: fiscal + extranjería, cifras y collage con parallax.
 7. **Reseñas** · carrusel arrastrable con las reseñas reales de Google.
-8. **Reservar** · panel de doble bisel: pestañas píldora (pagar / que me llamen).
+8. **Reservar** · panel de doble bisel: calendario de pago + contacto directo (teléfono y WhatsApp).
 9. **FAQ** · acordeón + tarjeta de contacto directo.
-10. **Cierre** · panel con Madrid de fondo, plazo en vivo y último CTA.
+10. **Cierre** · panel con Madrid de fondo, plazo en vivo, reserva + WhatsApp y teléfono.
+
+CTA intermedios (reserva + WhatsApp): franja tras los 3 datos del problema, enlace "Preguntar por
+WhatsApp" en cada tarjeta de servicio, botones bajo las cifras de "Por qué MEDLA" y franja bajo las
+reseñas. En móvil la barra fija lleva WhatsApp junto a la reserva.
+
+### Sub-páginas del embudo
+
+| URL | Para qué | Diseño |
+|---|---|---|
+| `/reservar/` | Destino de todos los "Reservo mi sesión" | H1 + 3 pasos, bloque de reserva con el calendario (carga al entrar), garantías y 4 FAQ |
+| `/whatsapp/` | Destino de todos los "Escribir por WhatsApp": agradecimiento + salto a WhatsApp en 2,4 s | Panel navy, vista previa del mensaje ya escrito, barra de progreso, tarjeta para reservar |
+| `/gracias/` | Tras completar la reserva en el calendario | Check dibujado, próximos pasos, qué tener a mano por tipo de caso, ayuda para cambiar la cita |
+
+Motion de las sub-páginas solo en CSS (entrada escalonada, burbuja con muelle, check que se dibuja)
+para que carguen al instante; respetan `prefers-reduced-motion`.
 
 ## 4 · Motion
 
@@ -87,19 +106,21 @@ píldora. Botón con ícono en su propio círculo. Sombras teñidas de navy, nun
 | Servicios | `position: sticky` + la tarjeta anterior se reduce y se oscurece al llegar la siguiente | scrub |
 | Oferta | línea de pasos `scaleY` + íconos que se encienden; ticket con inclinación al cursor | scrub / `power3.out` |
 | Por qué | contadores + fotos del collage a velocidades distintas | `power2.out` / scrub |
-| Micro | botones magnéticos, píldora de pestañas, acordeón, flechas que se desplazan | 0,2–0,45 s |
+| Micro | botones magnéticos, acordeón, flechas que se desplazan | 0,2–0,45 s |
 
 `gsap.matchMedia()` con `desktop` + `compact` + `reduce` (cobertura total). Con movimiento reducido
 todo queda en estado final; el apilado sigue funcionando porque es CSS.
 
 ## 5 · Conversión
 
-- Un intent, una etiqueta: **Reservo mi sesión** (header, hero, tarjetas, ticket, cierre, barra móvil).
-  Intent secundario: **Prefiero que me llamen** → formulario → `/api/form/fiscal` → HighLevel.
+- Un intent, una etiqueta: **Reservo mi sesión** (header, hero, problema, tarjetas, ticket, por qué MEDLA,
+  reseñas, cierre, barra móvil) → `/reservar/?cta=<origen>`. Intent secundario: **Escribir por WhatsApp**
+  → `/whatsapp/?cta=<origen>` (o llamar). El calendario completo sigue también al final de la landing.
+  Sin formulario ni conexión con la API de HighLevel: lo único de HighLevel es el widget público del
+  calendario de pago, y su aviso `msgsndr-booking-complete` lleva a `/gracias/`.
 - Plazo fiscal real y dinámico (`data-dl`): 30 ene, 31 mar, 20 abr, 30 jun, 20 jul, 20 oct, con
   traslado a lunes si cae en fin de semana.
-- Las tarjetas de servicio guardan el tema elegido y lo preseleccionan en el formulario.
-- UTM, `gclid` y `fbclid` viajan con el lead. Eventos `dataLayer`/`fbq` si existen.
+- Medición por URL (cada paso es una página) y por eventos `dataLayer`/`fbq`: ver README.
 
 ## 6 · Fuentes del copy
 

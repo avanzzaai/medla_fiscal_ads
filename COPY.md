@@ -2,7 +2,7 @@
 
 Producto: sesión de asesoría fiscal online de 60 min por Microsoft Teams, 121 € IVA incluido,
 con informe detallado por escrito y estrategia fiscal inicial (calendario GHL "Asesoría Fiscal").
-Intents: **Reservo mi sesión** (reservar y pagar) · **Prefiero que me llamen** (lead sin pago).
+Intents: **Reservo mi sesión** (reservar y pagar) · **Escribir por WhatsApp** (hablar antes, sin pago).
 Registro: tú, frases cortas, sin jerga sin explicar. Cero promesas absolutas.
 
 ## Por qué estos servicios (demanda real)
@@ -15,7 +15,7 @@ Renta 6,90 · Autónomos 1,56 (303 + 130 + alta) · Herencias y donaciones 1,43 
 - Píldora: Sesión fiscal online de 60 min · 121 €
 - H1: Hacienda, *sin sustos*.
 - Sub: Un asesor fiscal revisa tu caso por videollamada y te dice qué presentar, cuánto pagar y cuándo hacerlo.
-- CTA: Reservo mi sesión · Prefiero que me llamen
+- CTA: Reservo mi sesión · Escribir por WhatsApp
 - Tarjeta: Próximo plazo (dinámico) · Reseñas: Excelente, 42 reseñas en Google
 
 ## Problema
@@ -59,9 +59,44 @@ Online por Teams · Qué incluye · Sirve fuera de Madrid (normativa autonómica
 Residencia vs residencia fiscal (183 días, art. 9 LIRPF) · Carta de Hacienda · Disponibilidad (de 3 a 30 días vista en GHL).
 
 ## Cierre
-- Paga lo justo. *A tiempo.* + plazo dinámico + Reservo mi sesión / o llama al +34 914 32 14 57
+- Paga lo justo. *A tiempo.* + plazo dinámico + Reservo mi sesión / Escribir por WhatsApp
+- ¿Prefieres hablar? Llama al +34 914 32 14 57
+
+## CTA intermedios
+- Tras el problema: "¿Vas tarde, te ha llegado una carta o crees que pagaste de más?" / "En una hora un asesor
+  fiscal revisa tu caso y te dice cómo resolverlo." · Reservo mi sesión · Escribir por WhatsApp
+- Cada tarjeta de servicio: Reservo mi sesión · Preguntar por WhatsApp (el mensaje lleva el tema)
+- Por qué MEDLA: Reservo mi sesión · Escribir por WhatsApp
+- Tras las reseñas: "Una hora con un asesor fiscal." / "121 €, IVA incluido. Sin cuotas ni permanencia."
+
+## /reservar/
+- H1: Reserva tu *sesión fiscal*. · "Elige día y hora en el calendario. Pagas 121 € con tarjeta y un asesor
+  fiscal revisa tu caso por videollamada."
+- Pasos: Eliges día y hora (en el calendario) · Dejas tus datos y pagas (121 €, con tarjeta) · Recibes la
+  confirmación (por correo)
+- Bloque: Una hora. *Un plan claro.* + lo que incluye + plazo + reseña de Rodrigo González
+- Garantías: pago seguro con tarjeta · Microsoft Teams · Excelente en Google (42) · C/ Velázquez 27
+- FAQ: online · qué incluye · fuera de Madrid · disponibilidad. Tarjeta: "¿Tu caso tiene algo especial?"
+
+## /whatsapp/ (agradecimiento + salto)
+- Gracias por escribirnos · Te abrimos *WhatsApp*. · "Tu mensaje ya va escrito: solo tienes que enviarlo.
+  El equipo de MEDLA te responde por ahí." · Abrir WhatsApp · o llama al +34 914 32 14 57
+- Mensaje según `?tema=`: (sin tema) "Hola, quiero información sobre la sesión de asesoría fiscal." ·
+  renta "… para mi declaración de la Renta." · autonomos "… para autónomos." · herencias "… por una herencia
+  o donación." · extranjeros "… para extranjeros y no residentes." · duda "Hola, tengo una duda sobre la
+  sesión de asesoría fiscal."
+- Tarjeta: ¿Lo tienes claro? · Deja reservada tu *sesión fiscal*. · Reservo mi sesión
+
+## /gracias/ (reserva hecha)
+- Reserva recibida · Gracias. *Tu sesión está reservada.* · "Nuestro equipo confirma tu cita y te escribe por
+  correo con el enlace de Microsoft Teams para la videollamada. Si no lo ves, mira en la carpeta de spam."
+  (coherente con `autoConfirm: false`)
+- Próximos pasos: Reserva y pago (hecho) · Confirmamos tu cita · Hablamos 60 minutos · Recibes tu plan
+- Qué tener a mano: Renta · Autónomos · Herencias y donaciones · Extranjeros y no residentes (+ cartas de Hacienda)
+- ¿Necesitas cambiar algo de tu reserva? · WhatsApp directo (no cuenta como lead) · teléfono
 
 ## Pendiente de confirmar con MEDLA
 - Plazo de entrega del informe tras la sesión.
+- Que el correo de confirmación de GHL incluya el enlace de Microsoft Teams (lo promete /gracias/).
 - Vigencia de las cifras de marca (6+ años, 200+ casos).
 - Idioma del widget de calendario de GHL (hoy muestra "Enter details", "First name"...) y país por defecto del teléfono (México).

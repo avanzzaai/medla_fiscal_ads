@@ -6,7 +6,8 @@
   <title>Asesoría fiscal online: Renta, autónomos, herencias y extranjeros | MEDLA Asesores</title>
   <meta name="description" content="Un asesor fiscal revisa tu caso por videollamada y te dice qué presentar, cuánto pagar y cuándo. Renta, autónomos, herencias y extranjeros. 60 minutos, 121 € IVA incluido.">
   <meta name="robots" content="noindex, follow">
-  <meta name="theme-color" content="#0B1D24">
+  <meta name="theme-color" content="#F9F8F6">
+  <meta name="color-scheme" content="light">
   <link rel="canonical" href="https://medla-fiscal-ads.vercel.app/">
 
   <meta property="og:type" content="website">
@@ -49,11 +50,11 @@
       "address": {"@type": "PostalAddress", "streetAddress": "C/ Velázquez 27, 1º", "postalCode": "28001", "addressLocality": "Madrid", "addressCountry": "ES"}
     },
     "areaServed": "ES",
-    "offers": {"@type": "Offer", "price": "121.00", "priceCurrency": "EUR", "url": "https://medla-fiscal-ads.vercel.app/#reservar"}
+    "offers": {"@type": "Offer", "price": "121.00", "priceCurrency": "EUR", "url": "https://medla-fiscal-ads.vercel.app/reservar/"}
   }
   </script>
 </head>
-<body>
+<body data-page="landing" data-root="">
   <a class="skip" href="#main">Saltar al contenido</a>
 
   <!-- Cabecera flotante: sin navegación (página de anuncio) -->
@@ -72,7 +73,7 @@
           <svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-phone"></use></svg>
           <span>914 32 14 57</span>
         </a>
-        <a class="btn btn--gold btn--sm nav__cta" href="#reservar" data-track="cta_click" data-cta="header" data-magnetic>
+        <a class="btn btn--gold btn--sm nav__cta" href="reservar/?cta=header" data-go data-track="cta_click" data-cta="header" data-magnetic>
           <span class="btn__t">Reservo mi sesión</span>
           <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
         </a>
@@ -105,11 +106,11 @@
           <h1 id="hero-title" class="hero__title" data-hero-title>Hacienda, <span class="nowrap"><em>sin sustos</em>.</span></h1>
           <p class="hero__sub" data-hero-item>Un asesor fiscal revisa tu caso por videollamada y te dice qué presentar, cuánto pagar y cuándo hacerlo.</p>
           <div class="hero__ctas" data-hero-item>
-            <a class="btn btn--gold btn--lg" href="#reservar" data-track="cta_click" data-cta="hero" data-magnetic>
+            <a class="btn btn--gold btn--lg" href="reservar/?cta=hero" data-go data-track="cta_click" data-cta="hero" data-magnetic>
               <span class="btn__t">Reservo mi sesión</span>
               <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
             </a>
-            <a class="link link--light" href="#reservar" data-open-tab="llamada" data-track="callback_click">Prefiero que me llamen</a>
+            <a class="link link--light" href="whatsapp/?cta=hero" data-go data-track="whatsapp_cta" data-cta="hero"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg>Escribir por WhatsApp</a>
           </div>
         </div>
       </div>
@@ -164,6 +165,16 @@
             <p class="fact__src"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-seal-check"></use></svg>Art. 66, Ley General Tributaria</p>
           </article>
         </div>
+        <div class="nudge" data-reveal>
+          <p class="nudge__t">¿Vas tarde, te ha llegado una carta o crees que pagaste de más? <span>En una hora un asesor fiscal revisa tu caso y te dice cómo resolverlo.</span></p>
+          <div class="nudge__act">
+            <a class="btn btn--ink" href="reservar/?cta=problema" data-go data-track="cta_click" data-cta="problema">
+              <span class="btn__t">Reservo mi sesión</span>
+              <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
+            </a>
+            <a class="link" href="whatsapp/?cta=problema" data-go data-track="whatsapp_cta" data-cta="problema"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg>Escribir por WhatsApp</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -191,10 +202,13 @@
                 <svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-calendar-dots"></use></svg>
                 <p>La campaña va de abril al 30 de junio. Lo que hagas antes del 31 de diciembre ya cuenta para la próxima. <span class="card__src">Fuente: Agencia Tributaria</span></p>
               </div>
-              <a class="btn btn--ink card__cta" href="#reservar" data-topic="Declaración de la Renta" data-track="cta_click" data-cta="card-renta">
-                <span class="btn__t">Reservo mi sesión</span>
-                <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
-              </a>
+              <div class="card__acts">
+                <a class="btn btn--ink card__cta" href="reservar/?cta=card-renta" data-go data-track="cta_click" data-cta="card-renta">
+                  <span class="btn__t">Reservo mi sesión</span>
+                  <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
+                </a>
+                <a class="card__wa" href="whatsapp/?cta=card-renta&amp;tema=renta" data-go data-track="whatsapp_cta" data-cta="card-renta"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg>Preguntar por WhatsApp</a>
+              </div>
             </div>
             <figure class="card__media">
               <img src="assets/img/svc-renta-1200.webp" srcset="assets/img/svc-renta-720.webp 720w, assets/img/svc-renta-1200.webp 1200w" sizes="(min-width: 1024px) 45vw, 100vw" alt="Una pareja revisa su declaración de la Renta en casa" width="1200" height="1500" loading="lazy" data-card-img>
@@ -216,10 +230,13 @@
                 <svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-house-line"></use></svg>
                 <p>¿Trabajas en casa? Puedes deducir el 30 % de la luz, el agua e internet de la parte de la vivienda que usas para trabajar. <span class="card__src">Fuente: art. 30, Ley del IRPF</span></p>
               </div>
-              <a class="btn btn--gold card__cta" href="#reservar" data-topic="Autónomos: IVA, IRPF o alta" data-track="cta_click" data-cta="card-autonomos">
-                <span class="btn__t">Reservo mi sesión</span>
-                <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
-              </a>
+              <div class="card__acts">
+                <a class="btn btn--gold card__cta" href="reservar/?cta=card-autonomos" data-go data-track="cta_click" data-cta="card-autonomos">
+                  <span class="btn__t">Reservo mi sesión</span>
+                  <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
+                </a>
+                <a class="card__wa" href="whatsapp/?cta=card-autonomos&amp;tema=autonomos" data-go data-track="whatsapp_cta" data-cta="card-autonomos"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg>Preguntar por WhatsApp</a>
+              </div>
             </div>
             <figure class="card__media">
               <img src="assets/img/svc-autonomos-1200.webp" srcset="assets/img/svc-autonomos-720.webp 720w, assets/img/svc-autonomos-1200.webp 1200w" sizes="(min-width: 1024px) 45vw, 100vw" alt="Un diseñador autónomo revisa sus facturas en su estudio" width="1200" height="1500" loading="lazy" data-card-img>
@@ -241,10 +258,13 @@
                 <svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-key"></use></svg>
                 <p>En Madrid, hijos, cónyuge y padres pagan solo el 1 % del impuesto: bonificación del 99 %. Tienes 6 meses desde el fallecimiento. <span class="card__src">Fuente: Comunidad de Madrid</span></p>
               </div>
-              <a class="btn btn--ink card__cta" href="#reservar" data-topic="Herencia o donación" data-track="cta_click" data-cta="card-herencias">
-                <span class="btn__t">Reservo mi sesión</span>
-                <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
-              </a>
+              <div class="card__acts">
+                <a class="btn btn--ink card__cta" href="reservar/?cta=card-herencias" data-go data-track="cta_click" data-cta="card-herencias">
+                  <span class="btn__t">Reservo mi sesión</span>
+                  <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
+                </a>
+                <a class="card__wa" href="whatsapp/?cta=card-herencias&amp;tema=herencias" data-go data-track="whatsapp_cta" data-cta="card-herencias"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg>Preguntar por WhatsApp</a>
+              </div>
             </div>
             <figure class="card__media">
               <img src="assets/img/svc-herencias-1200.webp" srcset="assets/img/svc-herencias-720.webp 720w, assets/img/svc-herencias-1200.webp 1200w" sizes="(min-width: 1024px) 45vw, 100vw" alt="Una mano mayor entrega unas llaves a una mano joven" width="1200" height="1500" loading="lazy" data-card-img>
@@ -266,10 +286,13 @@
                 <svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-airplane-tilt"></use></svg>
                 <p>Para acogerte a la Ley Beckham tienes 6 meses desde tu alta en la Seguridad Social (modelo 149). <span class="card__src">Fuente: art. 93, Ley del IRPF</span></p>
               </div>
-              <a class="btn btn--gold card__cta" href="#reservar" data-topic="Residencia fiscal, Ley Beckham o no residentes" data-track="cta_click" data-cta="card-extranjeros">
-                <span class="btn__t">Reservo mi sesión</span>
-                <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
-              </a>
+              <div class="card__acts">
+                <a class="btn btn--gold card__cta" href="reservar/?cta=card-extranjeros" data-go data-track="cta_click" data-cta="card-extranjeros">
+                  <span class="btn__t">Reservo mi sesión</span>
+                  <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
+                </a>
+                <a class="card__wa" href="whatsapp/?cta=card-extranjeros&amp;tema=extranjeros" data-go data-track="whatsapp_cta" data-cta="card-extranjeros"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg>Preguntar por WhatsApp</a>
+              </div>
             </div>
             <figure class="card__media">
               <img src="assets/img/svc-extranjeros-1200.webp" srcset="assets/img/svc-extranjeros-720.webp 720w, assets/img/svc-extranjeros-1200.webp 1200w" sizes="(min-width: 1024px) 45vw, 100vw" alt="Una pareja recién llegada a Madrid con sus maletas mira su nuevo edificio" width="1200" height="1500" loading="lazy" data-card-img>
@@ -328,7 +351,7 @@
               <li><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-check-circle-fill"></use></svg>Informe detallado por escrito</li>
               <li><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-check-circle-fill"></use></svg>Estrategia fiscal inicial</li>
             </ul>
-            <a class="btn btn--gold btn--lg btn--block" href="#reservar" data-track="cta_click" data-cta="ticket" data-magnetic>
+            <a class="btn btn--gold btn--lg btn--block" href="reservar/?cta=ticket" data-go data-track="cta_click" data-cta="ticket" data-magnetic>
               <span class="btn__t">Reservo mi sesión</span>
               <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
             </a>
@@ -351,6 +374,13 @@
               <div class="stat" data-reveal><dt>reseñas en Google, valoración excelente</dt><dd><span data-count="42">42</span></dd></div>
               <div class="stat" data-reveal><dt>sedes: Madrid y Ciudad de México</dt><dd><span data-count="2">2</span></dd></div>
             </dl>
+            <div class="why__ctas" data-reveal>
+              <a class="btn btn--gold" href="reservar/?cta=medla" data-go data-track="cta_click" data-cta="medla" data-magnetic>
+                <span class="btn__t">Reservo mi sesión</span>
+                <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
+              </a>
+              <a class="link link--light" href="whatsapp/?cta=medla" data-go data-track="whatsapp_cta" data-cta="medla"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg>Escribir por WhatsApp</a>
+            </div>
           </div>
           <div class="why__collage" aria-hidden="true">
             <figure class="why__ph why__ph--a" data-speed="7">
@@ -417,6 +447,18 @@
           <figcaption><span class="avatar" aria-hidden="true">JM</span><span><strong>Jelin Martinez</strong><span>Reseña en Google</span></span></figcaption>
         </figure>
       </div>
+      <div class="wrap">
+        <div class="nudge nudge--paper" data-reveal>
+          <p class="nudge__t">Una hora con un asesor fiscal. <span>121 €, IVA incluido. Sin cuotas ni permanencia.</span></p>
+          <div class="nudge__act">
+            <a class="btn btn--gold" href="reservar/?cta=resenas" data-go data-track="cta_click" data-cta="resenas">
+              <span class="btn__t">Reservo mi sesión</span>
+              <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
+            </a>
+            <a class="link" href="whatsapp/?cta=resenas" data-go data-track="whatsapp_cta" data-cta="resenas"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg>Escribir por WhatsApp</a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- 8 · RESERVAR -->
@@ -446,82 +488,17 @@
                 <p>¿Dudas antes de reservar?</p>
                 <div class="book__btns">
                   <a class="ghost" href="tel:+34914321457" data-track="tel_click"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-phone"></use></svg>914 32 14 57</a>
-                  <a class="ghost" href="https://wa.me/34914321457?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20la%20sesi%C3%B3n%20de%20asesor%C3%ADa%20fiscal" target="_blank" rel="noopener" data-track="whatsapp_click"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg>WhatsApp</a>
+                  <a class="ghost" href="whatsapp/?cta=reserva" data-go data-track="whatsapp_cta" data-cta="reserva"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg>WhatsApp</a>
                 </div>
               </div>
             </aside>
 
             <div class="book__main">
-              <div class="tabs" role="tablist" aria-label="Elige cómo empezar">
-                <span class="tabs__ink" aria-hidden="true"></span>
-                <button class="tabs__btn" role="tab" id="tab-reserva" aria-controls="panel-reserva" aria-selected="true" data-tab="reserva">
-                  <svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-credit-card"></use></svg>Reservar y pagar
-                </button>
-                <button class="tabs__btn" role="tab" id="tab-llamada" aria-controls="panel-llamada" aria-selected="false" tabindex="-1" data-tab="llamada">
-                  <svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-phone"></use></svg><span class="tabs__long">Prefiero que me llamen</span><span class="tabs__short">Que me llamen</span>
-                </button>
+              <div class="cal" data-cal>
+                <div class="cal__skeleton" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                <iframe data-src="https://api.leadconnectorhq.com/widget/booking/ExwwLZ24X6UPcOY0UGEj" title="Calendario de reserva: Asesoría Fiscal" id="ExwwLZ24X6UPcOY0UGEj_lp" scrolling="no"></iframe>
               </div>
-
-              <div class="tabpanel" id="panel-reserva" role="tabpanel" aria-labelledby="tab-reserva" tabindex="0">
-                <div class="cal" data-cal>
-                  <div class="cal__skeleton" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                  <iframe data-src="https://api.leadconnectorhq.com/widget/booking/ExwwLZ24X6UPcOY0UGEj" title="Calendario de reserva: Asesoría Fiscal" id="ExwwLZ24X6UPcOY0UGEj_lp" scrolling="no"></iframe>
-                </div>
-                <p class="cal__alt">¿No carga el calendario? <a href="https://api.leadconnectorhq.com/widget/booking/ExwwLZ24X6UPcOY0UGEj" target="_blank" rel="noopener" data-track="booking_newtab">Ábrelo en una pestaña nueva</a>.</p>
-              </div>
-
-              <div class="tabpanel" id="panel-llamada" role="tabpanel" aria-labelledby="tab-llamada" tabindex="0" hidden>
-                <form class="form" data-form="fiscal" novalidate>
-                  <p class="form__intro">Déjanos tus datos y un asesor te llama para ver tu caso antes de reservar. Sin compromiso de pago.</p>
-                  <div class="form__grid">
-                    <div class="field">
-                      <label for="f-name">Nombre y apellidos</label>
-                      <input id="f-name" name="name" type="text" autocomplete="name" required>
-                      <p class="field__err" id="f-name-err"></p>
-                    </div>
-                    <div class="field">
-                      <label for="f-phone">Teléfono</label>
-                      <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+34 600 000 000" required>
-                      <p class="field__err" id="f-phone-err"></p>
-                    </div>
-                    <div class="field field--wide">
-                      <label for="f-email">Correo electrónico</label>
-                      <input id="f-email" name="email" type="email" autocomplete="email" required>
-                      <p class="field__err" id="f-email-err"></p>
-                    </div>
-                    <div class="field field--wide">
-                      <label for="f-topic">¿Sobre qué es tu consulta?</label>
-                      <div class="select">
-                        <select id="f-topic" name="topic" required>
-                          <option value="">Elige una opción</option>
-                          <option>Declaración de la Renta</option>
-                          <option>Autónomos: IVA, IRPF o alta</option>
-                          <option>Herencia o donación</option>
-                          <option>Residencia fiscal, Ley Beckham o no residentes</option>
-                          <option>Me ha llegado una carta de Hacienda</option>
-                          <option>Otra consulta fiscal</option>
-                        </select>
-                      </div>
-                      <p class="field__err" id="f-topic-err"></p>
-                    </div>
-                    <div class="field field--wide">
-                      <label for="f-msg">Cuéntanos tu caso <span class="field__opt">(opcional)</span></label>
-                      <textarea id="f-msg" name="message" rows="3"></textarea>
-                    </div>
-                  </div>
-                  <label class="check">
-                    <input type="checkbox" name="consent_processing" value="1" required>
-                    <span>Acepto que MEDLA trate mis datos para responder a mi consulta, según su <a href="https://medla-asesores.com/politica-de-privacidad/" target="_blank" rel="noopener">política de privacidad</a>.</span>
-                  </label>
-                  <p class="field__err" id="f-consent-err"></p>
-                  <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-                  <button class="btn btn--ink btn--lg form__submit" type="submit">
-                    <span class="btn__t">Quiero que me llaméis</span>
-                    <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
-                  </button>
-                  <p class="form__status" role="status" aria-live="polite"></p>
-                </form>
-              </div>
+              <p class="cal__alt">¿No carga el calendario? <a href="https://api.leadconnectorhq.com/widget/booking/ExwwLZ24X6UPcOY0UGEj" target="_blank" rel="noopener" data-track="booking_newtab">Ábrelo en una pestaña nueva</a>.</p>
             </div>
           </div>
         </div>
@@ -537,7 +514,7 @@
             <span class="talk__ic" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-chat-circle-dots"></use></svg></span>
             <p class="talk__t">¿Prefieres hablar con alguien antes?</p>
             <p class="talk__p">Escríbenos por WhatsApp o llámanos al <a href="tel:+34914321457" data-track="tel_click">+34 914 32 14 57</a>.</p>
-            <a class="btn btn--gold" href="https://wa.me/34914321457?text=Hola%2C%20tengo%20una%20duda%20sobre%20la%20sesi%C3%B3n%20de%20asesor%C3%ADa%20fiscal" target="_blank" rel="noopener" data-track="whatsapp_click">
+            <a class="btn btn--gold" href="whatsapp/?cta=faq&amp;tema=duda" data-go data-track="whatsapp_cta" data-cta="faq">
               <span class="btn__t">Escribir por WhatsApp</span>
               <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg></span>
             </a>
@@ -588,12 +565,16 @@
             <span>Próximo plazo: <strong data-dl="long">20 de octubre</strong>, <span data-dl="label">IVA e IRPF del tercer trimestre</span>. <span data-dl="days"></span></span>
           </p>
           <div class="final__ctas" data-reveal>
-            <a class="btn btn--gold btn--lg" href="#reservar" data-track="cta_click" data-cta="cierre" data-magnetic>
+            <a class="btn btn--gold btn--lg" href="reservar/?cta=cierre" data-go data-track="cta_click" data-cta="cierre" data-magnetic>
               <span class="btn__t">Reservo mi sesión</span>
               <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
             </a>
-            <a class="link link--light" href="tel:+34914321457" data-track="tel_click">o llama al +34 914 32 14 57</a>
+            <a class="btn btn--glass btn--lg" href="whatsapp/?cta=cierre" data-go data-track="whatsapp_cta" data-cta="cierre">
+              <span class="btn__t">Escribir por WhatsApp</span>
+              <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg></span>
+            </a>
           </div>
+          <p class="final__tel" data-reveal>¿Prefieres hablar? <a href="tel:+34914321457" data-track="tel_click">Llama al +34 914 32 14 57</a></p>
         </div>
       </div>
     </section>
@@ -617,7 +598,8 @@
   <!-- Barra de reserva fija en móvil -->
   <div class="dock" data-dock aria-hidden="true">
     <p class="dock__txt"><strong>121 €</strong><span>60 min · IVA incl.</span></p>
-    <a class="btn btn--gold btn--sm" href="#reservar" tabindex="-1" data-track="cta_click" data-cta="dock">
+    <a class="dock__wa" href="whatsapp/?cta=dock" tabindex="-1" data-go data-track="whatsapp_cta" data-cta="dock" aria-label="Escribir por WhatsApp"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-whatsapp-logo"></use></svg></a>
+    <a class="btn btn--gold btn--sm" href="reservar/?cta=dock" tabindex="-1" data-go data-track="cta_click" data-cta="dock">
       <span class="btn__t">Reservo mi sesión</span>
       <span class="btn__i" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg#i-arrow-right"></use></svg></span>
     </a>
@@ -626,6 +608,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
+  <script src="assets/core.js" defer></script>
   <script src="assets/landing.js" defer></script>
   <script src="https://link.msgsndr.com/js/form_embed.js" defer></script>
 </body>
